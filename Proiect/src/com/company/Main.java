@@ -1,6 +1,9 @@
 package com.company;
 
 import gym_wars.*;
+import RWServices.*;
+
+import java.io.IOException;
 
 public class Main {
     public static void EndGame (Player P1, Player P2){
@@ -13,7 +16,7 @@ public class Main {
                     "is a true lifter!");
         }
     }
-    public static void MatchBetween(Player P1, Player P2){
+    public static void MatchBetween(Player P1, Player P2) throws IOException {
         P1.setOpponent(P2);
         P2.setOpponent(P1);
         while (!P1.IsDead() && !P2.IsDead()){
@@ -29,7 +32,11 @@ public class Main {
             }
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Bodybuilder.readData();
+        Spotter.readData();
+        Strongman.readData();
+        Trainer.readData();
         String name = "Alex";
         Player player1 = new Player(name);
         Player player2 = new Player("John");

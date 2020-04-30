@@ -1,5 +1,8 @@
 package gym_wars;
 
+import RWServices.Auditing;
+
+import java.io.IOException;
 import java.util.Random;
 
 public class LifterFactory {
@@ -8,7 +11,8 @@ public class LifterFactory {
     private static int max_body = 300001;
     private static int max_train = 420000;
     private static int max_strong = 500000;
-    public Lifter generate_lifter(){
+    public Lifter generate_lifter() throws IOException {
+        Auditing.addAction("generate_lifter");
         Random rand = new Random();
         int type_number = rand.nextInt(max_rand);
         if (type_number < max_spot){
