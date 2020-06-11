@@ -41,13 +41,13 @@ public class ReadWriteService {
         output.close();
     }
 
-    public void writeAction (String path, String action_name) throws IOException {
+    public void writeAction (String path, String action_name, String thread_name) throws IOException {
         FileWriter output = new FileWriter(path, true);
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
         String when = ts.toString();
-        output.write(action_name + "()," + when + "\n");
+        output.write(action_name + "()," + when + "," + thread_name + "\n");
         output.close();
     }
 }

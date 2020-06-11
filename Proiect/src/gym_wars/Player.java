@@ -1,10 +1,9 @@
 package gym_wars;
-/*import org.w3c.dom.ls.LSOutput;
 
-import javax.sound.midi.Soundbank;*/
 import RWServices.Auditing;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class Player {
     private ArrayList <Lifter> zone;
     private Player opponent;
 
-    public Player() throws IOException {
+    public Player() throws IOException, SQLException {
         System.out.println("Enter the player name :");
         Scanner input = new Scanner(System.in);
         this.name = input.nextLine();
@@ -31,7 +30,7 @@ public class Player {
             hand.add(lifters_gang.get_next_lifter());
         zone = new ArrayList<>();
     }
-    public Player(String p_name) throws IOException {
+    public Player(String p_name) throws IOException, SQLException {
         this.name = p_name;
         System.out.println("Player " + this.name + " entered the game!");
         gains = start_gains;
@@ -85,7 +84,7 @@ public class Player {
     }
 
     int CheckMove (int X, int Y) throws IOException {
-        Auditing.addAction("CheckMove");
+        Auditing.addAction("CheckMove", Thread.currentThread().getName());
         if (X < 0 || X >= this.hand.size() + this.zone.size())
             return 0;
         if (X < hand.size() && hand.get(X).IsSpotter() && Y > this.hand.size() - 1 &&
@@ -100,7 +99,7 @@ public class Player {
     }
 
     public void ShowCards() throws IOException {
-        Auditing.addAction("ShowCards");
+        Auditing.addAction("ShowCards", Thread.currentThread().getName());
         ///Here a player is presented with the list of his cards
         ///and he has to make a move for the game to continue
         System.out.println(this.name + " has the following cards:");
@@ -128,10 +127,15 @@ public class Player {
                     "type in the word \"action\"");
             current = input.nextLine();
             //System.out.println("Am citit " + current);
-            while (current.equals("action")){
+            while (current.equals("action") || current.equals("quit")){
+                if (current.equals("quit")){
+                    Quit();
+                    return;
+                }
                 HowTo();
                 current = input.nextLine();
             }
+
             arr = current.split(" ");
             x = arr.length;
             //System.out.println(x);
@@ -163,7 +167,7 @@ public class Player {
     }
 
     public void HowTo() throws IOException {
-        Auditing.addAction("HowTo");
+        Auditing.addAction("HowTo", Thread.currentThread().getName());
         System.out.println("On each action you have to introduce " +
                 "2 distinct numbers with only one space between them");
         System.out.println("The first number is the number of the " +
@@ -177,6 +181,7 @@ public class Player {
                 "effect on you you write 1000 and if you want the " +
                 "card to have effect on your opponent you type in " +
                 "-1000");
+        System.out.println("If you want to quit the game type in the word quit");
     }
 
     public boolean IsDead(){
@@ -186,7 +191,7 @@ public class Player {
     }
 
     public void Quit() throws IOException {
-        Auditing.addAction("Quit");
+        Auditing.addAction("Quit", Thread.currentThread().getName());
         System.out.println("Player " + this.name +
                 " is a pussy and quits!");
         this.gains = 0;

@@ -27,6 +27,11 @@ public abstract class Lifter {
         System.out.println(card_name + " with " + this.power +
                 " power and that needs " + this.cost + " protein");
     }
+    public String LifterType(){
+        String type_name = this.getClass()
+                .getCanonicalName().substring(9);
+        return type_name;
+    }
     public boolean IsSpotter(){
         return this.is_spotter;
     }

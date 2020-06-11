@@ -7,7 +7,7 @@ import java.io.IOException;
 public class EddieHall extends Lifter {
     @Override
     public void ability(Lifter lifter_target, Player player_target) throws IOException {
-        Auditing.addAction("ability");
+        Auditing.addAction("ability", Thread.currentThread().getName());
         System.out.println("Wild Eddie Hall appeared");
         System.out.println("Due to extreme levels of dehydration " +
                 player_target.getName() + " loses all his gains!");

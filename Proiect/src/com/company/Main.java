@@ -2,21 +2,37 @@ package com.company;
 
 import gym_wars.*;
 import RWServices.*;
+import GUI.*;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main {
-    public static void EndGame (Player P1, Player P2){
+    public static void ReadAllData() throws IOException, SQLException {
+        Bodybuilder.readData();
+        Spotter.readData();
+        Strongman.readData();
+        Trainer.readData();
+    }
+    public static void FinalUpdateAll () throws IOException, SQLException {
+        Strongman.finalUpdate();
+        Spotter.finalUpdate();
+        Trainer.finalUpdate();
+        Bodybuilder.finalUpdate();
+    }
+    public static void EndGame (Player P1, Player P2) throws IOException, SQLException {
         if (P1.IsDead()){
             System.out.println(P2.getName() + " has won and" +
                     "is a true lifter!");
         }
         else {
-            System.out.println(P1.getName() + " has won and" +
+            System.out.println(P1.getName() + " has won and " +
                     "is a true lifter!");
         }
+        FinalUpdateAll();
     }
-    public static void MatchBetween(Player P1, Player P2) throws IOException {
+    public static void MatchBetween(Player P1, Player P2) throws IOException, SQLException {
         P1.setOpponent(P2);
         P2.setOpponent(P1);
         while (!P1.IsDead() && !P2.IsDead()){
@@ -32,12 +48,10 @@ public class Main {
             }
         }
     }
-    public static void main(String[] args) throws IOException {
-        Bodybuilder.readData();
-        Spotter.readData();
-        Strongman.readData();
-        Trainer.readData();
-        String name = "Alex";
+    public static void main(String[] args) throws IOException, SQLException {
+        //ReadAllData();
+        new GUI.Menu();
+        /*String name = "Alex";
         Player player1 = new Player(name);
         Player player2 = new Player("John");
         Strongman strong1 = new Strongman();
@@ -67,6 +81,16 @@ public class Main {
         }
         Player player3 = new Player("Brian");
         Player player4 = new Player("Sam");
-        MatchBetween (player3, player4);
+        Strongman.deleteLifter(5);
+        Trainer.deleteLifter(7);
+        Spotter.deleteLifter(10);
+        Bodybuilder.deleteLifter(22);
+        Strongman.deleteLifter(100);
+        Strongman.editLifter(5, 10, 10);
+        Trainer.editLifter(7, 10, 12);
+        Spotter.editLifter(10, 22, 32);
+        Bodybuilder.editLifter(22, 12, 10);
+        FinalUpdateAll();
+        MatchBetween (player3, player4);*/
     }
 }
